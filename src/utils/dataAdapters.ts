@@ -13,3 +13,10 @@ export const parseStringNumberToFloat = (formattedValue: string): number => {
   return Number.isNaN(result) ? 0 : result;
 };
 
+export const capitalizeFirstLetter = (str: string):string => {
+  if (str) {
+    return str.replace(/^\w/, (c) => c.toUpperCase());
+  }
+  return '';
+};
+
