@@ -30,6 +30,7 @@ const CurrencyField = ({ value, onChange, ...props }: Props) => {
       slotProps={{
         htmlInput: {
           maxLength: 13,
+          'data-testid': 'currency-input'
         },
       }}
     />
