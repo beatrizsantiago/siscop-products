@@ -16,6 +16,39 @@
 - [Firebase](https://firebase.google.com) — backend como serviço (BaaS) para autenticação, banco de dados e hospedagem;
 - [react-toastify](https://fkhadra.github.io/react-toastify/introduction/) — sistema de notificações e alertas;
 - [@module-federation/vite](https://github.com/module-federation/vite) — integração de Module Federation para arquitetura de microfrontends.
+- [Jest](https://jestjs.io/) — framework de testes para JavaScript, utilizado para os testes unitários e de integração;
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) — utilizada para testes de componentes React com foco na experiência do usuário.
+
 
 ### 🛠️ Ferramentas de Desenvolvimento
 - IDE: [VSCode](https://code.visualstudio.com/)
+
+### 🎯 Getting Started
+
+Com o docker instalado, rode o comando:
+
+```bash
+docker-compose up --build
+```
+
+Para utilizar o projeto sem o docker, é necessário entrar em cada pasta e realizar os seguintes comandos:
+
+Instalar as dependências
+
+```bash
+npm install
+```
+
+Iniciar projeto no modo dev:
+
+```bash
+npm run dev
+```
+
+Com o projeto rodando, abra [http://localhost:3001](http://localhost:3001) com seu navegador.
+
+Para rodar os testes, rode o seguinte comando:
+
+```bash
+npm run test
+```
