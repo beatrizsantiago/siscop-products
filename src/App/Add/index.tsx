@@ -9,6 +9,7 @@ import { useProductContext } from '@App/context';
 import { firebaseProduct } from '@fb/product';
 import AddProductUseCase from '@usecases/addProduct';
 import ErrorLabel from '@components/ErrorLabel';
+import CurrencyField from '@components/CurrencyField';
 
 const Add = () => {
   const { dispatch } = useProductContext();
@@ -16,6 +17,7 @@ const Add = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Errors>(null);
+  const [unitValue, setUnitValue] = useState('');
 
   const handleClose = () => setShowDialog(false);
 
@@ -26,7 +28,6 @@ const Add = () => {
 
     const name = formData.get('name') as string;
     const cycleDays = formData.get('cycleDays') as string;
-    const unitValue = formData.get('unitValue') as string;
 
     const absCycleDays = Math.abs(parseStringNumberToFloat(cycleDays));
     const absUnitValue = Math.abs(parseStringNumberToFloat(unitValue));
@@ -111,13 +112,13 @@ const Add = () => {
                 {errors?.cycleDays && <ErrorLabel error={errors.cycleDays} />}
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <TextField
-                  name="unitValue"
+                <CurrencyField
                   label="Preço unitário"
                   helperText="Ex: R$ 2,00"
                   placeholder="0,00"
-                  variant='standard'
-                  type="number"
+                  variant="standard"
+                  value={unitValue}
+                  onChange={(value) => setUnitValue(value as string)}
                   fullWidth
                   required
                 />

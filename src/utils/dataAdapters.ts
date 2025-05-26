@@ -5,6 +5,7 @@ export const formatMoney = (value?:number | null):string => (value
 export const parseStringNumberToFloat = (formattedValue: string): number => {
   const cleaned = formattedValue
     .replace(/\s/g, '')
+    .replace('R$', '')
     .replace(/\./g, '')
     .replace(',', '.');
 
