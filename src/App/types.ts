@@ -6,7 +6,8 @@ export type State = {
 };
 
 export type ActionType = { type: 'SET_PRODUCTS', list: Product[] }
-| { type: 'ADD_PRODUCT', item: Product };
+| { type: 'ADD_PRODUCT', item: Product }
+| { type: 'DELETE_PRODUCT', id: string };
 
 export type ProductProviderType = {
   state: State,

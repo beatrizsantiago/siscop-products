@@ -13,6 +13,11 @@ const reducer = (state: State, action: ActionType):State => {
         ...state,
         products: [...state.products, action.item],
       };
+    case 'DELETE_PRODUCT':
+      return {
+        ...state,
+        products: state.products.filter((product) => product.id !== action.id),
+      };
 
     default:
       throw new Error('Unhandled action');

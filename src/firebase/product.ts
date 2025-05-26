@@ -1,6 +1,6 @@
 import { ProductRepository } from '@domain/repositories/ProductRepository';
 import {
-  addDoc, collection, getDocs, query,
+  addDoc, collection, deleteDoc, doc, getDocs, query,
 } from 'firebase/firestore';
 import Product from '@domain/entities/Product';
 
@@ -32,6 +32,10 @@ class FirebaseProduct implements ProductRepository {
     } as Product));
 
     return products;
+  }
+
+  async delete(id: string): Promise<void> {
+    return await deleteDoc(doc(firestore, 'products', id));
   }
 };
 
