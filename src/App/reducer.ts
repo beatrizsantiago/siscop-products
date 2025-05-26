@@ -8,11 +8,21 @@ const reducer = (state: State, action: ActionType):State => {
         products: action.list,
         loading: false,
       };
+      
     case 'ADD_PRODUCT':
       return {
         ...state,
         products: [...state.products, action.item],
       };
+
+    case 'UPDATE_PRODUCT':
+      return {
+        ...state,
+        products: state.products.map((product) =>
+          product.id === action.item.id ? action.item : product
+        ),
+      };
+
     case 'DELETE_PRODUCT':
       return {
         ...state,

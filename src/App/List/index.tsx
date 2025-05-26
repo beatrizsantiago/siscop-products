@@ -1,13 +1,10 @@
-import {
-  Box, IconButton, Paper, Typography, useTheme,
-} from '@mui/material';
-import { PencilSimpleIcon } from '@phosphor-icons/react';
+import { Box, Paper, Typography } from '@mui/material';
 import { formatMoney } from '@utils/dataAdapters';
 import { useProductContext } from '@App/context';
 import Delete from '@App/Delete';
+import Update from '@App/Update';
 
 const List = () => {
-  const { palette } = useTheme();
 
   const { state } = useProductContext();
 
@@ -40,9 +37,7 @@ const List = () => {
             </Box>
 
             <Box>
-              <IconButton>
-                <PencilSimpleIcon size={20} color={palette.secondary.main} />
-              </IconButton>
+              <Update product={item} />
               <Delete product={item} />
             </Box>
           </Box>
