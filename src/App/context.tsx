@@ -5,6 +5,7 @@ import {
 import { firebaseProduct } from '@fb/product';
 import { toast } from 'react-toastify';
 import GetAllProductsUseCase from '@usecases/getAllProducts';
+import SearchProductsUseCase from '@usecases/searchProductsByName';
 
 import { ProductProviderProps, ProductProviderType, State } from './types';
 import reducer from './reducer';
@@ -35,6 +36,25 @@ const ProductProvider = ({ children }: ProductProviderProps) => {
     }
   }, []);
 
+  const onSearch = useCallback(async (searchText: string) => {
+    try {
+      if (!searchText) {
+        getProducts();
+        return;
+      }
+
+      const searchUserCase = new SearchProductsUseCase(firebaseProduct);
+      const products = await searchUserCase.execute(searchText);
+
+      dispatch({
+        type: 'SET_PRODUCTS',
+        list: products,
+      });
+    } catch {
+      toast.error('Erro ao pesquisar produtos');
+    }
+  }, [getProducts]);
+
   useEffect(() => {
     if (!initialized.current) {
       initialized.current = true;
@@ -45,7 +65,8 @@ const ProductProvider = ({ children }: ProductProviderProps) => {
   const value = useMemo(() => ({
     state,
     dispatch,
-  }), [state]);
+    onSearch,
+  }), [state, onSearch]);
 
   return (
     <Context.Provider value={value}>

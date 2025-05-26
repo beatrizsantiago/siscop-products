@@ -13,6 +13,7 @@ export type ActionType = { type: 'SET_PRODUCTS', list: Product[] }
 export type ProductProviderType = {
   state: State,
   dispatch: React.Dispatch<ActionType>,
+  onSearch: (searchText: string) => Promise<void>,
 };
 
 export type ProductProviderProps = {

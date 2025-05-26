@@ -1,7 +1,8 @@
 import { ProductRepository } from '@domain/repositories/ProductRepository';
 import {
   addDoc, collection, deleteDoc, doc,
-  getDocs, query, updateDoc,
+  endAt, getDocs, orderBy, query,
+  startAt, updateDoc,
 } from 'firebase/firestore';
 import Product from '@domain/entities/Product';
 
@@ -47,6 +48,24 @@ class FirebaseProduct implements ProductRepository {
 
   async delete(id: string): Promise<void> {
     return await deleteDoc(doc(firestore, 'products', id));
+  }
+
+  async searchByName(searchText: string): Promise<Product[]> {
+     const producsQuery = query(
+      collection(firestore, 'products'),
+      orderBy('name'),
+      startAt(searchText),
+      endAt(searchText + '\uf8ff')
+    );
+
+    const snapshot = await getDocs(producsQuery);
+
+    const products = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    } as Product));
+
+    return products;
   }
 };
 

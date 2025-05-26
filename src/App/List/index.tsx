@@ -5,7 +5,6 @@ import Delete from '@App/Delete';
 import Update from '@App/Update';
 
 const List = () => {
-
   const { state } = useProductContext();
 
   return (
