@@ -1,4 +1,5 @@
 import { ProductRepository } from '@domain/repositories/ProductRepository';
+import { capitalizeFirstLetter } from '@utils/dataAdapters';
 import Product from '@domain/entities/Product';
 
 class UpdateProductUseCase {
@@ -7,7 +8,7 @@ class UpdateProductUseCase {
   async execute(params: Product) {
     const product = new Product(
       params.id,
-      params.name,
+      capitalizeFirstLetter(params.name.trim()),
       params.unit_value,
       params.cycle_days,
     );
