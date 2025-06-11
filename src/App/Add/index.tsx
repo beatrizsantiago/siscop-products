@@ -7,6 +7,7 @@ import { Errors } from '@generalTypes/global';
 import { parseStringNumberToFloat } from '@utils/dataAdapters';
 import { useProductContext } from '@App/context';
 import { firebaseProduct } from '@fb/product';
+import { toast } from 'react-toastify';
 import AddProductUseCase from '@usecases/addProduct';
 import ErrorLabel from '@components/ErrorLabel';
 import CurrencyField from '@components/CurrencyField';
@@ -19,7 +20,12 @@ const Add = () => {
   const [errors, setErrors] = useState<Errors>(null);
   const [unitValue, setUnitValue] = useState('');
 
-  const handleClose = () => setShowDialog(false);
+  const handleClose = () => {
+    setUnitValue('');
+    setErrors(null);
+    setLoading(false);
+    setShowDialog(false);
+  }
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -61,8 +67,8 @@ const Add = () => {
       setUnitValue('');
 
       handleClose();
-    } catch (error) {
-      console.log(error);
+    } catch {
+      toast.error('Erro ao cadastrar produto');
     } finally {
       setLoading(false);
     }
