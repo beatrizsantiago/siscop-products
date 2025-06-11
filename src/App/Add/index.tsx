@@ -58,6 +58,8 @@ const Add = () => {
         item: response,
       });
 
+      setUnitValue('');
+
       handleClose();
     } catch (error) {
       console.log(error);
