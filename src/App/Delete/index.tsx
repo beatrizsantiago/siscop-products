@@ -30,7 +30,11 @@ const Delete = ({ product }:Props) => {
       dispatch({
         type: 'DELETE_PRODUCT', id: product.id,
       });
-    } catch {
+    } catch (error: any) {
+      if ('message' in error && typeof error.message === 'string' && error.message.includes('REFERENCE_ERROR')) {
+        toast.error('Não é possível excluir este produto, pois ele está referenciado em outros registros.');
+        return;
+      }
       toast.error('Erro ao excluir o produto. Tente novamente.');
     }
   };

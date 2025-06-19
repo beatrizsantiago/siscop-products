@@ -17,6 +17,8 @@ jest.mock('firebase/firestore', () => ({
   orderBy: jest.fn(),
   startAt: jest.fn(),
   endAt: jest.fn(),
+  where: jest.fn(),
+  limit: jest.fn(),
 }));
 
 describe('FirebaseProduct', () => {
@@ -84,14 +86,37 @@ describe('FirebaseProduct', () => {
     expect(result).toEqual(product);
   });
 
-  it('should delete a product', async () => {
-    (doc as jest.Mock).mockReturnValue('mock-doc');
+  it('should return true if product is referenced', async () => {
+    (getDocs as jest.Mock).mockResolvedValueOnce({
+      empty: false,
+    });
+
+    const result = await firebaseProduct.isProductReferenced('goals', 'product1');
+    expect(result).toBe(true);
+  });
+
+  it('should return false if product is not referenced', async () => {
+    (getDocs as jest.Mock).mockResolvedValueOnce({
+      empty: true,
+    });
+
+    const result = await firebaseProduct.isProductReferenced('goals', 'product1');
+    expect(result).toBe(false);
+  });
+
+  it('should throw if product is referenced in any collection', async () => {
+    (getDocs as jest.Mock).mockResolvedValueOnce({ empty: false });
+
+    await expect(firebaseProduct.delete('product1')).rejects.toThrow('REFERENCE_ERROR:goals');
+  });
+
+  it('should delete the product if not referenced', async () => {
+    (getDocs as jest.Mock).mockResolvedValue({ empty: true });
     (deleteDoc as jest.Mock).mockResolvedValue(undefined);
 
-    await firebaseProduct.delete(product.id);
+    await firebaseProduct.delete('product1');
 
-    expect(doc).toHaveBeenCalledWith(expect.anything(), 'products', product.id);
-    expect(deleteDoc).toHaveBeenCalledWith('mock-doc');
+    expect(deleteDoc).toHaveBeenCalled();
   });
 
   it('should search products by name', async () => {
