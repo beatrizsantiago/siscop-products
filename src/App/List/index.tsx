@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, CircularProgress, Paper, Typography } from '@mui/material';
 import { formatMoney } from '@utils/dataAdapters';
 import { useProductContext } from '@App/context';
 import Delete from '@App/Delete';
@@ -6,6 +6,14 @@ import Update from '@App/Update';
 
 const List = () => {
   const { state } = useProductContext();
+
+  if (state.loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <CircularProgress />
+      </Box>
+    )
+  };
 
   return (
     <Box>
