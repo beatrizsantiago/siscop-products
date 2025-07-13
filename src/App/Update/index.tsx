@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import {
   Box, Button, Dialog, TextField, Typography, Grid,
-  IconButton,
-  useTheme,
+  IconButton, useTheme,
 } from '@mui/material';
 import { PencilSimpleIcon } from '@phosphor-icons/react';
 import { Errors } from '@generalTypes/global';
 import { formatMoney, parseStringNumberToFloat } from '@utils/dataAdapters';
 import { useProductContext } from '@App/context';
 import { firebaseProduct } from '@fb/product';
+import { toast } from 'react-toastify';
 import UpdateProductUseCase from '@usecases/updateProduct';
 import ErrorLabel from '@components/ErrorLabel';
 import CurrencyField from '@components/CurrencyField';
@@ -68,8 +68,8 @@ const Update = ({ product }:Props) => {
       });
 
       handleClose();
-    } catch (error) {
-      console.log(error);
+    } catch {
+      toast.error('Erro ao atualizar o produto. Tente novamente mais tarde.');
     } finally {
       setLoading(false);
     }
